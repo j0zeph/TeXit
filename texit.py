@@ -26,8 +26,10 @@ common = {
     'tex_dollars': '$$',
     'large_txt': f"{size['large']}" + f"{ctt_type['text']}" +
                  f"{brace['open']}",
-    'end_slash': f"{brace['close']}" + r'\\',
+    'end_slash': r'\\',
     }
+
+needs_2nd_close_brace = {'-und',}
 
 # markers and their TeX translations
 mapping = {
@@ -35,6 +37,7 @@ mapping = {
     '-bf': f"{size['large']}" + r'\textbf{',
     '-br': '$$$$',
     '-bbr': '$$ $$',
+    '-und': r'\underline{' + f"{common['large_txt']}",
     }
 
 # generate regex from the keys of the mappings dict
@@ -61,7 +64,7 @@ def main():
         print(show_error('file_nonexistent'))
         print()
         print(show_error('usage'))
-        exit(2)
+        sys.exit(2)
 
     # save the output file in the same location as the input file
     infile_pattern = r'^(?P<origin>.*?)?(?P<name>[\w\.]*)(?P<ext>\.[\w]*)$'
@@ -71,8 +74,18 @@ def main():
     outfile_name = infile_match.group('name')
     outfile_path = outfile_location + outfile_name + '_texit_out.txt'
 
+    # ask if user would like to overwrite the existing output file
+    if os.path.exists(outfile_path):
+        print(f'\nThe output file `{outfile_path}` already exists')
+        overwrite = input('Do you want to overwrite it? (y/n): ')
+
+        if overwrite.lower() in 'y':
+            print('overwrite complete!')
+        else:
+            sys.exit('Nothing changed, goodbye!')
+
     # prepare for writing
-    outfile = open(outfile_path, 'a', encoding='utf8')
+    outfile = open(outfile_path, 'w', encoding='utf8')
 
     # open the input file, and process each line
     with open(infile_name, 'r', encoding='utf-8') as infile:
@@ -92,11 +105,10 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
         if not line:
             break
 
-        # start the TeX
-        if line in '-start' or line in '-begin':
+        # write `$$` at the beginning and end of the file.
+        if line in '-begin':
             outfile.write(f"{common['tex_dollars']}\n")
 
-        # end the TeX
         elif line in '-end':
             outfile.write(f"{common['tex_dollars']}\n")
 
@@ -111,7 +123,7 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
             if marker is None:
                 outfile.write(f'{large_text}{text}{end_slash}\n')
             else:
-                # special case for standalone -br and -bbr markers
+                # special cases for standalone -br and -bbr markers
                 if marker == '-br':
                     outfile.write(f"{mapping['-br']}\n")
 
@@ -120,9 +132,19 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
 
                 else:
                     if marker == '':
-                        outfile.write(f"{common['large_txt']}{text}{end_slash}\n")
+                        outfile.write(f"{common['large_txt']}{text}")
+                        outfile.write(f"{brace['close']}")
+                        outfile.write(f'{end_slash}')
+                        outfile.write('\n')
                     else:
-                        outfile.write(f'{mapping[marker]}{text}{end_slash}\n')
+                        outfile.write(f"{mapping[marker]}{text}")
+                        outfile.write(f"{brace['close']}")
+
+                        if marker in needs_2nd_close_brace:
+                            outfile.write(f"{brace['close']}")
+                        else:
+                            outfile.write(f'{end_slash}')
+                            outfile.write('\n')
 
 
 def show_error(message_type: str) -> str:

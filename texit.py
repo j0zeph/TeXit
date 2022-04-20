@@ -74,15 +74,15 @@ def main():
     outfile_name = infile_match.group('name')
     outfile_path = outfile_location + outfile_name + '_texit_out.txt'
 
+    overwrite: str
+
     # ask if user would like to overwrite the existing output file
     if os.path.exists(outfile_path):
         print(f'\nThe output file `{outfile_path}` already exists')
         overwrite = input('Do you want to overwrite it? (y/n): ')
 
-        if overwrite.lower() in 'y':
-            print('overwrite complete!')
-        else:
-            sys.exit('Nothing changed, goodbye!')
+        if overwrite.lower() in 'n':
+            sys.exit('Nothing has changed, goodbye!')
 
     # prepare for writing
     outfile = open(outfile_path, 'w', encoding='utf8')
@@ -97,6 +97,7 @@ def main():
 
     outfile.close()
 
+    print('Overwrite completed!')
 
 def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
     """Processes each line in the input file provided, and writes the

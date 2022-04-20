@@ -44,6 +44,7 @@ mapping = {
 
 # generate regex from the keys of the mappings dict
 starts = ''.join(['^' + str(x) + '|' for x in mapping.keys()])
+
 possible_starts = r'(?P<marker>' + starts + r')?'
 rest_of_string = r'([ ]*)?(?P<text>.*)?(?P<nln>\n)?'
 
@@ -86,10 +87,9 @@ def main():
         if overwrite.lower() in 'n':
             sys.exit('Nothing has changed, goodbye!')
 
-    # prepare for writing
     outfile = open(outfile_path, 'w', encoding='utf8')
 
-    # open the input file, and process each line
+    # add TeX syntax
     with open(infile_name, 'r', encoding='utf-8') as infile:
         outfile.write(common['tex_dollars'])
         outfile.write('\n')
@@ -100,6 +100,7 @@ def main():
     outfile.close()
 
     print('Overwrite completed!')
+
 
 def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
     """Processes each line in the input file provided, and writes the
@@ -141,6 +142,7 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
                         outfile.write(brace['close'])
                         outfile.write(common['end_slash'])
                         outfile.write('\n')
+
                     else:
                         outfile.write(mapping[marker])
                         outfile.write(text)

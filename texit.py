@@ -114,8 +114,6 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
             match = re.match(PATTERN, line)
             marker = match.group('marker')
             text = match.group('text')
-            end_slash = common['end_slash']
-            large_text = common['large_txt']
 
             # for a normal line of text
             if marker is None:

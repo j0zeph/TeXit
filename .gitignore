@@ -58,3 +58,6 @@ docs/_build/
 
 # xml
 *.xml
+
+# iml
+*.iml

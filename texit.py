@@ -89,7 +89,11 @@ def main():
 
     # open the input file, and process each line
     with open(infile_name, 'r', encoding='utf-8') as infile:
+        outfile.write(common['tex_dollars'])
+        outfile.write('\n')
         process_files(infile, outfile)
+        outfile.write(common['tex_dollars'])
+        outfile.write('\n')
 
     outfile.close()
 
@@ -104,13 +108,6 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
         # at end of file
         if not line:
             break
-
-        # write `$$` at the beginning and end of the file.
-        if line in '-begin':
-            outfile.write(f"{common['tex_dollars']}\n")
-
-        elif line in '-end':
-            outfile.write(f"{common['tex_dollars']}\n")
 
         else:
             match = re.match(PATTERN, line)

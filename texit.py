@@ -118,24 +118,32 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
 
             # for a normal line of text
             if marker is None:
-                outfile.write(f'{large_text}{text}{end_slash}\n')
+                outfile.write(common['large_txt'])
+                outfile.write(text)
+                outfile.write(common['end_slash'])
+                outfile.write('\n')
+
             else:
                 # special cases for standalone -br and -bbr markers
                 if marker == '-br':
-                    outfile.write(f"{mapping['-br']}\n")
+                    outfile.write(mapping['-br'])
+                    outfile.write('\n')
 
                 elif marker == '-bbr':
-                    outfile.write(f"{mapping['-bbr']}\n")
+                    outfile.write(mapping['-bbr'])
+                    outfile.write('\n')
 
                 else:
                     if marker == '':
-                        outfile.write(f"{common['large_txt']}{text}")
-                        outfile.write(f"{brace['close']}")
-                        outfile.write(f'{end_slash}')
+                        outfile.write(common['large_txt'])
+                        outfile.write(text)
+                        outfile.write(brace['close'])
+                        outfile.write(common['end_slash'])
                         outfile.write('\n')
                     else:
-                        outfile.write(f"{mapping[marker]}{text}")
-                        outfile.write(f"{brace['close']}")
+                        outfile.write(mapping[marker])
+                        outfile.write(text)
+                        outfile.write(brace['close'])
 
                         if marker in needs_2nd_close_brace:
                             outfile.write(f"{brace['close']}")

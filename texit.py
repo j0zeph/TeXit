@@ -147,9 +147,10 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
                         outfile.write(brace['close'])
 
                         if marker in needs_2nd_close_brace:
-                            outfile.write(f"{brace['close']}")
+                            outfile.write(brace['close'])
+
                         else:
-                            outfile.write(f'{end_slash}')
+                            outfile.write(common['end_slash'])
                             outfile.write('\n')
 
 

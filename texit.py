@@ -33,7 +33,9 @@ needs_2nd_close_brace = {'-und',}
 
 # markers and their TeX translations
 mapping = {
-    '-bp': r'\bullet' + f"{common['large_txt']}",
+    # add a space right after a bullet point
+    '-bp': r'\bullet' + f"{common['large_txt']}" + ' ',
+
     '-bf': f"{size['large']}" + r'\textbf{',
     '-br': '$$$$',
     '-bbr': '$$ $$',

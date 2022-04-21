@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """Command-line utility that takes a file as input, and adds TeX syntax to
 it, based on markers specified in the inputted file"""
 

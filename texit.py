@@ -125,47 +125,45 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
         if not line:
             break
 
-        else:
-            match = re.match(PATTERN, line)
-            marker = match.group('marker')
-            text = match.group('text')
+        match = re.match(PATTERN, line)
+        marker = match.group('marker')
+        text = match.group('text')
 
-            # for a normal line of text
-            if marker is None:
+        # for a normal line of text
+        if marker is None:
+            outfile.write(common['large_txt'])
+            outfile.write(text)
+            outfile.write(common['end_slash'])
+            outfile.write('\n')
+
+        # special cases for standalone -br and -bbr markers
+        if marker == '-br':
+            outfile.write(mapping['-br'])
+            outfile.write('\n')
+
+        elif marker == '-bbr':
+            outfile.write(mapping['-bbr'])
+            outfile.write('\n')
+
+        else:
+            if marker == '':
                 outfile.write(common['large_txt'])
                 outfile.write(text)
+                outfile.write(brace['close'])
                 outfile.write(common['end_slash'])
                 outfile.write('\n')
 
             else:
-                # special cases for standalone -br and -bbr markers
-                if marker == '-br':
-                    outfile.write(mapping['-br'])
-                    outfile.write('\n')
+                outfile.write(mapping[marker])
+                outfile.write(text)
+                outfile.write(brace['close'])
 
-                elif marker == '-bbr':
-                    outfile.write(mapping['-bbr'])
-                    outfile.write('\n')
+                if marker in needs_2nd_close_brace:
+                    outfile.write(brace['close'])
 
                 else:
-                    if marker == '':
-                        outfile.write(common['large_txt'])
-                        outfile.write(text)
-                        outfile.write(brace['close'])
-                        outfile.write(common['end_slash'])
-                        outfile.write('\n')
-
-                    else:
-                        outfile.write(mapping[marker])
-                        outfile.write(text)
-                        outfile.write(brace['close'])
-
-                        if marker in needs_2nd_close_brace:
-                            outfile.write(brace['close'])
-
-                        else:
-                            outfile.write(common['end_slash'])
-                            outfile.write('\n')
+                    outfile.write(common['end_slash'])
+                    outfile.write('\n')
 
 
 def show_error(message_type: str) -> str:

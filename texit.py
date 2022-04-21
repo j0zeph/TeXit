@@ -77,15 +77,24 @@ def main():
     outfile_name = infile_match.group('name')
     outfile_path = outfile_location + outfile_name + '_texit_out.txt'
 
-    overwrite: str
+    overwrite_permission: str
+    file_overwritten = False
 
-    # ask if user would like to overwrite the existing output file
+    # ask for permission to overwrite an already-existing output file
     if os.path.exists(outfile_path):
         print(f'\nThe output file `{outfile_path}` already exists')
-        overwrite = input('Do you want to overwrite it? (y/n): ')
 
-        if overwrite.lower() in 'n':
-            sys.exit('Nothing has changed, goodbye!')
+        while True:
+            overwrite_permission = input('Do you want to overwrite it? (y/n): ')
+
+            if overwrite_permission.lower() in 'n':
+                sys.exit('Nothing has changed, goodbye!')
+            elif overwrite_permission.lower() in 'y':
+                file_overwritten = True
+                break
+            else:
+                print("Enter a 'y' for yes, or 'n' for no.")
+                continue
 
     outfile = open(outfile_path, 'w', encoding='utf8')
 
@@ -97,9 +106,10 @@ def main():
         outfile.write(common['tex_dollars'])
         outfile.write('\n')
 
-    outfile.close()
+    if file_overwritten:
+        print('Overwrite successful!')
 
-    print('Overwrite completed!')
+    outfile.close()
 
 
 def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:

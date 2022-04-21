@@ -6,7 +6,7 @@
 ---
 <br>
 
-> ## <u>Markers, their effects, and resulting TeX syntax</u>
+> ## <u>Examples of markers and their meaning, effect, and resulting TeX syntax</u>
 <br>
 
 

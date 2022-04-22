@@ -3,19 +3,22 @@ from texit import add_tex_syntax
 
 
 class TestTexit(unittest.TestCase):
+    def setUp(self) -> None:
+        self.txt = 'Lorem ipsum dolor sit amet, ...'
+
     def test_bold_syntax_is_added(self):
-        txt = '-bf Lorem ipsum dolor sit amet, ...'
-        bolded = r'\large\textbf{Lorem ipsum dolor sit amet, ...}'
-        self.assertEqual(bolded, add_tex_syntax(txt))
+        bolded = r'\large\textbf{Lorem ipsum dolor sit amet, ...}\\'
+        self.assertEqual(bolded, add_tex_syntax('-bf' + self.txt))
 
     def test_bullet_point_is_added(self):
-        pass
+        bolded = r'\bullet\large\text{ Lorem ipsum dolor sit amet, ...}\\'
+        self.assertEqual(bolded, add_tex_syntax('-bp' + self.txt))
 
     def test_large_newline_is_added(self):
-        pass
+        self.assertEqual('$$ $$', add_tex_syntax('-bbr'))
 
     def test_small_newline_is_added(self):
-        pass
+        self.assertEqual('$$$$', add_tex_syntax('-br'))
 
     def test_underline_is_added(self):
         pass

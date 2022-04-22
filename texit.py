@@ -129,6 +129,9 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
 
 
 def add_tex_syntax(line: str) -> str:
+    """Returns a string, which is a result of adding TeX syntax to the
+    provided string"""
+
     modified = []
 
     match = re.match(PATTERN, line)

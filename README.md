@@ -1,14 +1,12 @@
-# **TeXit**
-### A commandline utility to add TeX syntax to a textfile,<br>
-### based on markers that are specified in the lines of that text file.
-<br>
+## TeXit
+
+A commandline utility to add TeX syntax to a textfile,<br>
+based on markers that are specified in that text file.<br>
 
 ---
-<br>
 
-> ## <u>Examples of markers and their meaning, effect, and resulting TeX syntax</u>
+### Markers, their meanings, effects, and resulting TeX syntax
 <br>
-
 
 | **Marker** | **Meaning**     | **Example**              | **Effect**           | **TeX syntax**                 |
 |------------|-----------------|--------------------------|----------------------|--------------------------------|
@@ -19,3 +17,11 @@
 | **-und**   | underline       | -und sample              | sample               | \underline{\large\text{sample} |
 
 <br>
+
+### Usage
+<br>
+
+```
+python texit.py <filepath|filename>
+```
+

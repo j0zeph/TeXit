@@ -126,6 +126,7 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
             break
 
         outfile.write(add_tex_syntax(line))
+        outfile.write('\n')
 
 
 def add_tex_syntax(line: str) -> str:
@@ -143,17 +144,14 @@ def add_tex_syntax(line: str) -> str:
         modified.append(common['large_txt'])
         modified.append(text)
         modified.append(common['end_slash'])
-        modified.append('\n')
 
     # special case for standalone -br
     if marker == '-br':
         modified.append(mapping['-br'])
-        modified.append('\n')
 
     # special case for standalone -bbr
     elif marker == '-bbr':
         modified.append(mapping['-bbr'])
-        modified.append('\n')
 
     else:
         if marker == '':
@@ -161,7 +159,6 @@ def add_tex_syntax(line: str) -> str:
             modified.append(text)
             modified.append(brace['close'])
             modified.append(common['end_slash'])
-            modified.append('\n')
 
         else:
             modified.append(mapping[marker])
@@ -173,7 +170,6 @@ def add_tex_syntax(line: str) -> str:
 
             else:
                 modified.append(common['end_slash'])
-                modified.append('\n')
 
     return ''.join(modified)
 

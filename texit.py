@@ -125,45 +125,54 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
         if not line:
             break
 
-        match = re.match(PATTERN, line)
-        marker = match.group('marker')
-        text = match.group('text')
+        outfile.write(add_tex_syntax(line))
 
-        # for a normal line of text
-        if marker is None:
-            outfile.write(common['large_txt'])
-            outfile.write(text)
-            outfile.write(common['end_slash'])
-            outfile.write('\n')
 
-        # special cases for standalone -br and -bbr markers
-        if marker == '-br':
-            outfile.write(mapping['-br'])
-            outfile.write('\n')
+def add_tex_syntax(line: str) -> str:
+    modified = []
 
-        elif marker == '-bbr':
-            outfile.write(mapping['-bbr'])
-            outfile.write('\n')
+    match = re.match(PATTERN, line)
+    marker = match.group('marker')
+    text = match.group('text')
+
+    # for a normal line of text
+    if marker is None:
+        modified.append(common['large_txt'])
+        modified.append(text)
+        modified.append(common['end_slash'])
+        modified.append('\n')
+
+    # special case for standalone -br
+    if marker == '-br':
+        modified.append(mapping['-br'])
+        modified.append('\n')
+
+    # special case for standalone -bbr
+    elif marker == '-bbr':
+        modified.append(mapping['-bbr'])
+        modified.append('\n')
+
+    else:
+        if marker == '':
+            modified.append(common['large_txt'])
+            modified.append(text)
+            modified.append(brace['close'])
+            modified.append(common['end_slash'])
+            modified.append('\n')
 
         else:
-            if marker == '':
-                outfile.write(common['large_txt'])
-                outfile.write(text)
-                outfile.write(brace['close'])
-                outfile.write(common['end_slash'])
-                outfile.write('\n')
+            modified.append(mapping[marker])
+            modified.append(text)
+            modified.append(brace['close'])
+
+            if marker in needs_2nd_close_brace:
+                modified.append(brace['close'])
 
             else:
-                outfile.write(mapping[marker])
-                outfile.write(text)
-                outfile.write(brace['close'])
+                modified.append(common['end_slash'])
+                modified.append('\n')
 
-                if marker in needs_2nd_close_brace:
-                    outfile.write(brace['close'])
-
-                else:
-                    outfile.write(common['end_slash'])
-                    outfile.write('\n')
+    return ''.join(modified)
 
 
 def show_error(message_type: str) -> str:

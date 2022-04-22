@@ -21,4 +21,5 @@ class TestTexit(unittest.TestCase):
         self.assertEqual('$$$$', add_tex_syntax('-br'))
 
     def test_underline_is_added(self):
-        pass
+        underlined = r'\underline{\large\text{Lorem ipsum dolor sit amet, ...}}'
+        self.assertEqual(underlined, add_tex_syntax('-und' + self.txt))

@@ -72,7 +72,7 @@ def main():
         sys.exit(2)
 
     # save the output file in the same location as the input file
-    infile_pattern = r'^(?P<origin>.*?)?(?P<name>[\w\.]*)(?P<ext>\.[\w]*)$'
+    infile_pattern = r'^(?P<origin>.*?)?(?P<name>[-\w\.]*)(?P<ext>\.[\w]*)$'
     infile_match = re.match(infile_pattern, infile_name)
 
     outfile_location = infile_match.group('origin')

@@ -76,8 +76,8 @@ def main():
     infile_match = re.match(infile_pattern, infile_name)
 
     outfile_location = infile_match.group('origin')
-    outfile_name = infile_match.group('name')
-    outfile_path = outfile_location + outfile_name + '_texit_out.txt'
+    outfile_name = infile_match.group('name') + '_texit_out.txt'
+    outfile_path = outfile_location + outfile_name
 
     overwrite_permission: str
     file_overwritten = False

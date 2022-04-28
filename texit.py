@@ -7,7 +7,7 @@ import os
 import re
 import sys
 import typing
-
+from textwrap import dedent
 
 # content types
 ctt_type = {
@@ -112,6 +112,19 @@ def main():
         print('Overwrite successful!')
 
     outfile.close()
+
+    # print summary of conversion
+    summary = dedent(f"""
+    --------------------
+    Summary:
+    --------------------
+    input file: {infile_name}
+    output file name: {outfile_name}
+    output file path: {outfile_path}
+    --------------------
+        """)
+
+    print(summary)
 
 
 def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:

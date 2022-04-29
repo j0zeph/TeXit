@@ -24,4 +24,47 @@ based on markers that are specified in that text file.<br>
 ```
 python texit.py <filepath|filename>
 ```
+<br>
 
+### Example<br>
+
+```example.txt```
+
+```
+-bf Lorem Ipsum
+-br
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+-und sed do eiusmod tempor incididunt ut labore et dolore
+magna aliqua.
+-br
+Ut enim ad minim veniam, quis nostrud exercitation
+ullamco laboris nisi ut:
+-br
+-bp aliquip ex ea
+-bp commodo consequat
+```
+<br>
+
+```
+python texit.py example.txt
+```
+<br>
+
+```example_texit_out.txt```
+
+```
+$$
+\large\textbf{Lorem Ipsum}\\
+$$$$
+\large\text{Lorem ipsum dolor sit amet, consectetur adipiscing elit,}\\
+\underline{\large\text{sed do eiusmod tempor incididunt ut labore et dolore}}
+\large\text{magna aliqua.}\\
+$$$$
+\large\text{Ut enim ad minim veniam, quis nostrud exercitation}\\
+\large\text{ullamco laboris nisi ut:}\\
+$$$$
+\bullet\large\text{ aliquip ex ea}\\
+\bullet\large\text{ commodo consequat}\\
+$$
+
+```

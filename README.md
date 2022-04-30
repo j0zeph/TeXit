@@ -32,14 +32,14 @@ python texit.py <filepath|filename>
 
 ```
 -bf Lorem Ipsum
--br
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 -und sed do eiusmod tempor incididunt ut labore et dolore
 magna aliqua.
--br
+
 Ut enim ad minim veniam, quis nostrud exercitation
 ullamco laboris nisi ut:
--br
+
 -bp aliquip ex ea
 -bp commodo consequat
 ```
@@ -66,5 +66,4 @@ $$$$
 \bullet\large\text{ aliquip ex ea}\\
 \bullet\large\text{ commodo consequat}\\
 $$
-
 ```

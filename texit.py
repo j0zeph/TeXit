@@ -132,7 +132,7 @@ def process_files(infile: typing.TextIO, outfile: typing.TextIO) -> None:
     results of processing onto the output file provided"""
 
     while True:
-        line = infile.readline().strip()
+        line = infile.readline()
 
         # at end of file
         if not line:
@@ -167,11 +167,16 @@ def add_tex_syntax(line: str) -> str:
         modified.append(mapping['-bbr'])
 
     else:
-        if marker == '':
+        # presence of text, with no markers
+        if marker == '' and text:
             modified.append(common['large_txt'])
             modified.append(text)
             modified.append(brace['close'])
             modified.append(common['end_slash'])
+
+        # we found whitespace
+        elif marker == '' and not text:
+            modified.append(mapping['-br'])
 
         else:
             modified.append(mapping[marker])

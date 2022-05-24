@@ -67,3 +67,8 @@ $$$$
 \bullet\large\text{ commodo consequat}\\
 $$
 ```
+<br>
+
+```Rendered syntax (rendered by generic Tex renderer```<br>
+
+![Syntax rendered in a generic TeX renderer](images/lorem_ipsum_rendered.jpg)
